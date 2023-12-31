@@ -9,7 +9,7 @@
     <children>
       <HBox alignment="TOP_CENTER" spacing="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
          <children>
-                <MediaView fitHeight="270.0" fitWidth="480.0">
+                <MediaView fx:id="mediaView" fitHeight="270.0" fitWidth="480.0">
                <HBox.margin>
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </HBox.margin></MediaView>
