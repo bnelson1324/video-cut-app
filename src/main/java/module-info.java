@@ -1,6 +1,7 @@
 module com.example.videocutapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
     requires kotlin.stdlib;
 
 
