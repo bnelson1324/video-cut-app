@@ -1,9 +1,12 @@
 package com.example.videocutapp
 
 import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.control.Label
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.media.MediaView
@@ -47,5 +50,24 @@ class MainController {
 
     private fun updateMediaPlayer() {
         mediaView.mediaPlayer = MediaPlayer(Media(videoList[mediaPlayerIndex].toURI().toString()))
+    }
+
+    val keyEventHandler = object : EventHandler<KeyEvent> {
+        override fun handle(ke: KeyEvent) {
+            when (ke.code) {
+                KeyCode.SPACE -> {
+                    if (mediaView.mediaPlayer?.media == null)
+                        return
+
+                    if (mediaView.mediaPlayer.status == MediaPlayer.Status.PLAYING) {
+                        mediaView.mediaPlayer.stop()
+                    } else {
+                        mediaView.mediaPlayer.play()
+                    }
+                }
+
+                else -> return
+            }
+        }
     }
 }
