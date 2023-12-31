@@ -6,25 +6,22 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videocutapp.MainController">
     <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+          <MediaView fx:id="mediaView" fitHeight="270.0" fitWidth="480.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0" />
+      <VBox alignment="TOP_RIGHT" spacing="8.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
          <children>
-                <MediaView fx:id="mediaView" fitHeight="270.0" fitWidth="480.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0" />
-            <VBox alignment="TOP_RIGHT" spacing="8.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="8.0">
-                     <children>
-                        <Button focusTraversable="false" mnemonicParsing="false" onAction="#onChooseDirectoryBtnClick" prefWidth="145.0" text="Choose Directory" />
-                        <Label fx:id="openDirectoryLabel" minWidth="400.0" prefHeight="17.0" style="-fx-border-color: black;" />
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER_LEFT">
-                     <children>
-                        <Label fx:id="startTimeLabel" text="Start Time:" />
-                        <Label fx:id="endTimeLabel" text="End Time:" />
-                     </children>
-                  </VBox>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onChooseDirectoryBtnClick" prefWidth="145.0" text="Choose Directory" />
+                  <Label fx:id="openDirectoryLabel" minWidth="400.0" prefHeight="17.0" style="-fx-border-color: black;" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label fx:id="startTimeLabel" text="Start Time:" />
+                  <Label fx:id="endTimeLabel" text="End Time:" />
                </children>
             </VBox>
-         </children></AnchorPane>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>
