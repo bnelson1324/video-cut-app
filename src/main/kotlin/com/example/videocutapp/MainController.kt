@@ -1,31 +1,42 @@
 package com.example.videocutapp
 
+import javafx.beans.value.ObservableValue
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.control.Label
+import javafx.scene.control.Slider
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.media.MediaView
 import javafx.stage.DirectoryChooser
+import javafx.util.Duration
 import java.io.File
 
 class MainController {
     private var openDirectory: File? = null
 
+    @FXML
+    private lateinit var openDirectoryLabel: Label
+
+
     private var videoList: Array<File> = arrayOf()
 
     private var mediaPlayerIndex = 0
-
 
     @FXML
     private lateinit var mediaView: MediaView
 
     @FXML
-    private lateinit var openDirectoryLabel: Label
+    private lateinit var mediaProgressSlider: Slider
+
+
+    private var startTime = 0
+
+    private var endTime = 0
 
     @FXML
     private lateinit var startTimeLabel: Label
@@ -49,7 +60,18 @@ class MainController {
     }
 
     private fun updateMediaPlayer() {
-        mediaView.mediaPlayer = MediaPlayer(Media(videoList[mediaPlayerIndex].toURI().toString()))
+        val media = Media(videoList[mediaPlayerIndex].toURI().toString())
+        val mediaPlayer = MediaPlayer(media)
+        mediaView.mediaPlayer = mediaPlayer
+
+        // update slider
+        mediaPlayer.currentTimeProperty()
+            .addListener { _: ObservableValue<out Duration?>, _: Duration, newValue: Duration ->
+                mediaProgressSlider.value = newValue.toSeconds()
+            }
+        mediaPlayer.onReady = Runnable {
+            mediaProgressSlider.max = mediaPlayer.totalDuration.toSeconds()
+        }
     }
 
     val keyEventHandler = object : EventHandler<KeyEvent> {
