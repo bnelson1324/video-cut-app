@@ -14,10 +14,17 @@ class MainController {
     private lateinit var openDirectoryLabel: Label
 
     @FXML
+    private lateinit var startTimeLabel: Label
+
+    @FXML
+    private lateinit var endTimeLabel: Label
+
+    @FXML
     fun onChooseDirectoryBtnClick(ae: ActionEvent) {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = "Choose folder with videos"
         openDirectory = directoryChooser.showDialog((ae.source as Node).scene.window) ?: return
-        openDirectoryLabel.text = openDirectory.toString()
+        openDirectoryLabel.text = "Source Directory: $openDirectory"
+        // TODO: update video list
     }
 }
