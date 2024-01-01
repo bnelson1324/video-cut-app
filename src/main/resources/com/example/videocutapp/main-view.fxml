@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
@@ -18,7 +19,10 @@
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
                   <Button focusTraversable="false" mnemonicParsing="false" onAction="#onChooseDirectoryBtnClick" prefWidth="145.0" text="Choose Directory" />
-                  <Label fx:id="openDirectoryLabel" minWidth="400.0" prefHeight="17.0" style="-fx-border-color: black;" />
+                  <Label fx:id="openDirectoryLabel" minWidth="400.0" prefHeight="17.0" style="-fx-border-color: black;">
+                     <padding>
+                        <Insets left="2.0" right="2.0" />
+                     </padding></Label>
                </children>
             </HBox>
             <VBox alignment="CENTER_LEFT">
