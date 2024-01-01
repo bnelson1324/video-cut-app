@@ -4,19 +4,23 @@ import javafx.beans.value.ObservableValue
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
+import javafx.fxml.Initializable
 import javafx.scene.Node
 import javafx.scene.control.Label
 import javafx.scene.control.Slider
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import javafx.scene.input.MouseEvent
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.media.MediaView
 import javafx.stage.DirectoryChooser
 import javafx.util.Duration
 import java.io.File
+import java.net.URL
+import java.util.*
 
-class MainController {
+class MainController : Initializable {
     private var openDirectory: File? = null
 
     @FXML
@@ -46,6 +50,15 @@ class MainController {
 
     @FXML
     private lateinit var endTimeLabel: Label
+
+
+    override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
+        // set up slider
+        mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED) { _ ->
+            mediaView.mediaPlayer?.pause()
+            mediaView.mediaPlayer?.seek(Duration(mediaProgressSlider.value * 1000))
+        }
+    }
 
     @FXML
     fun onChooseDirectoryBtnClick(ae: ActionEvent) {
@@ -77,6 +90,8 @@ class MainController {
             mediaProgressSlider.max = mediaPlayer.totalDuration.toSeconds()
             mediaLabel.text = "${formatTime(0.0)} / ${formatTime(media.duration.toSeconds())}"
         }
+
+        mediaPlayer.onEndOfMedia = Runnable { mediaPlayer.stop() }
     }
 
     val keyEventHandler = object : EventHandler<KeyEvent> {
@@ -87,7 +102,7 @@ class MainController {
                         return
 
                     if (mediaView.mediaPlayer.status == MediaPlayer.Status.PLAYING) {
-                        mediaView.mediaPlayer.stop()
+                        mediaView.mediaPlayer.pause()
                     } else {
                         mediaView.mediaPlayer.play()
                     }
