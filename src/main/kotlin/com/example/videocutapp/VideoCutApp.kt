@@ -14,6 +14,8 @@ class VideoCutApp : Application() {
         stage.title = "Video Cut App"
         stage.scene = scene
         stage.isMaximized = true
+        stage.minWidth = 1280.0
+        stage.minHeight = 720.0
         stage.show()
     }
 }
