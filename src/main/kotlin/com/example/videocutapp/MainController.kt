@@ -33,6 +33,9 @@ class MainController {
     @FXML
     private lateinit var mediaProgressSlider: Slider
 
+    @FXML
+    private lateinit var mediaLabel: Label
+
 
     private var startTime = 0
 
@@ -64,13 +67,15 @@ class MainController {
         val mediaPlayer = MediaPlayer(media)
         mediaView.mediaPlayer = mediaPlayer
 
-        // update slider
+        // update slider and text
         mediaPlayer.currentTimeProperty()
             .addListener { _: ObservableValue<out Duration?>, _: Duration, newValue: Duration ->
                 mediaProgressSlider.value = newValue.toSeconds()
+                mediaLabel.text = "${formatTime(newValue.toSeconds())} / ${formatTime(media.duration.toSeconds())}"
             }
         mediaPlayer.onReady = Runnable {
             mediaProgressSlider.max = mediaPlayer.totalDuration.toSeconds()
+            mediaLabel.text = "${formatTime(0.0)} / ${formatTime(media.duration.toSeconds())}"
         }
     }
 

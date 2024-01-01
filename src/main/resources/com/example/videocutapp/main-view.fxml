@@ -6,10 +6,11 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videocutapp.MainController">
     <children>
-      <VBox layoutX="84.0" layoutY="-17.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+      <VBox alignment="TOP_CENTER" layoutX="84.0" layoutY="-17.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
          <children>
                 <MediaView fx:id="mediaView" fitHeight="270.0" fitWidth="480.0" />
             <Slider fx:id="mediaProgressSlider" />
+            <Label fx:id="mediaLabel" />
          </children>
       </VBox>
       <VBox alignment="TOP_RIGHT" spacing="8.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
