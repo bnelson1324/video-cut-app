@@ -41,9 +41,9 @@ class MainController : Initializable {
     private lateinit var mediaLabel: Label
 
 
-    private var startTime = 0
+    private var startTime: Duration = Duration.ZERO
 
-    private var endTime = 0
+    private var endTime: Duration = Duration.ZERO
 
     @FXML
     private lateinit var startTimeLabel: Label
@@ -98,14 +98,27 @@ class MainController : Initializable {
         override fun handle(ke: KeyEvent) {
             when (ke.code) {
                 KeyCode.SPACE -> {
-                    if (mediaView.mediaPlayer?.media == null)
-                        return
+                    if (mediaView.mediaPlayer?.media == null) return
 
                     if (mediaView.mediaPlayer.status == MediaPlayer.Status.PLAYING) {
                         mediaView.mediaPlayer.pause()
                     } else {
                         mediaView.mediaPlayer.play()
                     }
+                }
+
+                KeyCode.Z -> {
+                    if (mediaView.mediaPlayer?.media == null) return
+
+                    startTime = mediaView.mediaPlayer.currentTime
+                    startTimeLabel.text = "Start Time: ${formatTime(startTime.toSeconds())}"
+                }
+
+                KeyCode.X -> {
+                    if (mediaView.mediaPlayer?.media == null) return
+
+                    endTime = mediaView.mediaPlayer.currentTime
+                    endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
                 }
 
                 else -> return
