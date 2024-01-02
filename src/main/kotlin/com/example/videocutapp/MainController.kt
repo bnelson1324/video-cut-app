@@ -44,12 +44,14 @@ class MainController : Initializable {
     private var startTime: Duration = Duration.ZERO
         set(value) {
             field = value
+            mediaView.mediaPlayer?.startTime = value
             startTimeLabel.text = "Start Time: ${formatTime(field.toSeconds())}"
         }
 
     private var endTime: Duration = Duration.ZERO
         set(value) {
             field = value
+            mediaView.mediaPlayer?.stopTime = value
             endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
         }
 
@@ -105,7 +107,10 @@ class MainController : Initializable {
             endTime = media.duration
         }
 
-        mediaPlayer.onEndOfMedia = Runnable { mediaPlayer.stop() }
+        mediaPlayer.onEndOfMedia = Runnable {
+            mediaPlayer.stop()
+            mediaPlayer.seek(startTime)
+        }
     }
 
     val keyEventHandler = object : EventHandler<KeyEvent> {
