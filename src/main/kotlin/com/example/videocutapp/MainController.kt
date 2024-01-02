@@ -11,6 +11,7 @@ import javafx.scene.control.Slider
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
+import javafx.scene.layout.AnchorPane
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.media.MediaView
@@ -62,6 +63,10 @@ class MainController : Initializable {
     private lateinit var endTimeLabel: Label
 
 
+    @FXML
+    private lateinit var root: AnchorPane
+
+
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // set up slider
         val sliderMouseEvent = EventHandler { _: MouseEvent ->
@@ -70,6 +75,7 @@ class MainController : Initializable {
         }
         mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_CLICKED, sliderMouseEvent)
         mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED, sliderMouseEvent)
+        mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_RELEASED) { root.requestFocus() }
     }
 
     @FXML
