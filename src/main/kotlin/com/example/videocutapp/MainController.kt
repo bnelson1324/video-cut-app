@@ -132,14 +132,25 @@ class MainController : Initializable {
                     }
                 }
 
-                KeyCode.Z -> {
+                KeyCode.Q -> {
                     if (mediaView.mediaPlayer?.media == null) return
-                    startTime = mediaView.mediaPlayer.currentTime
+
+                    startTime = if (!ke.isControlDown) {
+                        mediaView.mediaPlayer.currentTime
+                    } else {
+                        Duration.ZERO
+                    }
+
                 }
 
-                KeyCode.X -> {
+                KeyCode.E -> {
                     if (mediaView.mediaPlayer?.media == null) return
-                    endTime = mediaView.mediaPlayer.currentTime
+
+                    endTime = if (!ke.isControlDown) {
+                        mediaView.mediaPlayer.currentTime
+                    } else {
+                        mediaView.mediaPlayer.media.duration
+                    }
                 }
 
                 else -> return
