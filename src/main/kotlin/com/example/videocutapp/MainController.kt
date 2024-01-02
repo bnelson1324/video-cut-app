@@ -22,12 +22,13 @@ import java.net.URL
 import java.util.*
 
 class MainController : Initializable {
+    // open directory
     private var openDirectory: File? = null
 
     @FXML
     private lateinit var openDirectoryLabel: Label
 
-
+    // media player
     private var videoList: Array<File> = arrayOf()
 
     private var mediaPlayerIndex = 0
@@ -41,7 +42,7 @@ class MainController : Initializable {
     @FXML
     private lateinit var mediaLabel: Label
 
-
+    // start/end time
     private var startTime: Duration = Duration.ZERO
         set(value) {
             field = value
@@ -62,7 +63,7 @@ class MainController : Initializable {
     @FXML
     private lateinit var endTimeLabel: Label
 
-
+    // misc
     @FXML
     private lateinit var root: AnchorPane
 
