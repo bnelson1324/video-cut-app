@@ -62,10 +62,12 @@ class MainController : Initializable {
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // set up slider
-        mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED) { _ ->
+        val sliderMouseEvent = EventHandler { _: MouseEvent ->
             mediaView.mediaPlayer?.pause()
             mediaView.mediaPlayer?.seek(Duration(mediaProgressSlider.value * 1000))
         }
+        mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_CLICKED, sliderMouseEvent)
+        mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED, sliderMouseEvent)
     }
 
     @FXML
