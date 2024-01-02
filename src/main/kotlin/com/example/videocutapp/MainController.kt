@@ -42,8 +42,16 @@ class MainController : Initializable {
 
 
     private var startTime: Duration = Duration.ZERO
+        set(value) {
+            field = value
+            startTimeLabel.text = "Start Time: ${formatTime(field.toSeconds())}"
+        }
 
     private var endTime: Duration = Duration.ZERO
+        set(value) {
+            field = value
+            endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
+        }
 
     @FXML
     private lateinit var startTimeLabel: Label
@@ -92,9 +100,7 @@ class MainController : Initializable {
 
             // update startTime and endTime
             startTime = Duration.ZERO
-            startTimeLabel.text = "Start Time: ${formatTime(startTime.toSeconds())}"
             endTime = media.duration
-            endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
         }
 
         mediaPlayer.onEndOfMedia = Runnable { mediaPlayer.stop() }
@@ -121,16 +127,12 @@ class MainController : Initializable {
 
                 KeyCode.Z -> {
                     if (mediaView.mediaPlayer?.media == null) return
-
                     startTime = mediaView.mediaPlayer.currentTime
-                    startTimeLabel.text = "Start Time: ${formatTime(startTime.toSeconds())}"
                 }
 
                 KeyCode.X -> {
                     if (mediaView.mediaPlayer?.media == null) return
-
                     endTime = mediaView.mediaPlayer.currentTime
-                    endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
                 }
 
                 else -> return
