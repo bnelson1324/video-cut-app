@@ -19,6 +19,7 @@ import javafx.stage.DirectoryChooser
 import javafx.util.Duration
 import java.io.File
 import java.net.URL
+import java.nio.file.Files
 import java.util.*
 
 class MainController : Initializable {
@@ -29,7 +30,7 @@ class MainController : Initializable {
     private lateinit var openDirectoryLabel: Label
 
     // media player
-    private var videoList: Array<File> = arrayOf()
+    private var videoList: List<File> = listOf()
 
     private var mediaPlayerIndex = 0
 
@@ -90,7 +91,12 @@ class MainController : Initializable {
 
         // update video list and media player
         openDirectoryLabel.text = "Source Directory: $openDirectory"
-        videoList = openDirectory!!.listFiles()!! // TODO: filter files to be video files only
+        videoList = openDirectory!!.listFiles()!!
+            .filter {
+                // only keep video files
+                val contentType: String? = Files.probeContentType(it.toPath())
+                return@filter if (contentType != null) contentType.split('/')[0] == "video" else false
+            }
         updateMediaPlayer()
     }
 
