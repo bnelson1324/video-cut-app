@@ -33,6 +33,13 @@ class MainController : Initializable {
     private var videoList: List<File> = listOf()
 
     private var mediaPlayerIndex = 0
+        set(value) {
+            field = value
+
+            // prevent index out of bounds exception
+            if (videoList.isNotEmpty())
+                field = (field + videoList.size) % videoList.size
+        }
 
     @FXML
     private lateinit var mediaView: MediaView
@@ -101,6 +108,10 @@ class MainController : Initializable {
     }
 
     private fun updateMediaPlayer() {
+        // pause current media player
+        mediaView.mediaPlayer?.pause()
+
+        // update media player
         val media = Media(videoList[mediaPlayerIndex].toURI().toString())
         val mediaPlayer = MediaPlayer(media)
         mediaView.mediaPlayer = mediaPlayer
@@ -124,14 +135,17 @@ class MainController : Initializable {
             mediaPlayer.stop()
             mediaPlayer.seek(startTime)
         }
+
+        mediaProgressSlider.value = 0.0
     }
 
     val keyEventHandler = object : EventHandler<KeyEvent> {
         override fun handle(ke: KeyEvent) {
+            val mediaPlayer: MediaPlayer? = mediaView.mediaPlayer
+            if (mediaPlayer?.media == null) return
+
             when (ke.code) {
                 KeyCode.SPACE -> {
-                    val mediaPlayer = mediaView.mediaPlayer
-                    if (mediaPlayer?.media == null) return
 
                     if (mediaPlayer.status == MediaPlayer.Status.PLAYING) {
                         // pause
@@ -146,24 +160,37 @@ class MainController : Initializable {
                 }
 
                 KeyCode.Q -> {
-                    if (mediaView.mediaPlayer?.media == null) return
-
                     startTime = if (!ke.isControlDown) {
-                        mediaView.mediaPlayer.currentTime
+                        mediaPlayer.currentTime
                     } else {
                         Duration.ZERO
                     }
-
                 }
 
                 KeyCode.E -> {
-                    if (mediaView.mediaPlayer?.media == null) return
-
                     endTime = if (!ke.isControlDown) {
-                        mediaView.mediaPlayer.currentTime
+                        mediaPlayer.currentTime
                     } else {
-                        mediaView.mediaPlayer.media.duration
+                        mediaPlayer.media.duration
                     }
+                }
+
+                KeyCode.LEFT -> {
+                    mediaPlayer.seek(mediaPlayer.currentTime.subtract(Duration(if (!ke.isControlDown) 5000.0 else 15000.0)))
+                }
+
+                KeyCode.RIGHT -> {
+                    mediaPlayer.seek(mediaPlayer.currentTime.add(Duration(if (!ke.isControlDown) 5000.0 else 15000.0)))
+                }
+
+                KeyCode.A -> {
+                    mediaPlayerIndex -= 1
+                    updateMediaPlayer()
+                }
+
+                KeyCode.D -> {
+                    mediaPlayerIndex += 1
+                    updateMediaPlayer()
                 }
 
                 else -> return
