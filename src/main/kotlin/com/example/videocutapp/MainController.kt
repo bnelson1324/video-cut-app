@@ -89,6 +89,12 @@ class MainController : Initializable {
         mediaPlayer.onReady = Runnable {
             mediaProgressSlider.max = mediaPlayer.totalDuration.toSeconds()
             mediaLabel.text = "${formatTime(0.0)} / ${formatTime(media.duration.toSeconds())}"
+
+            // update startTime and endTime
+            startTime = Duration.ZERO
+            startTimeLabel.text = "Start Time: ${formatTime(startTime.toSeconds())}"
+            endTime = media.duration
+            endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
         }
 
         mediaPlayer.onEndOfMedia = Runnable { mediaPlayer.stop() }
@@ -98,12 +104,18 @@ class MainController : Initializable {
         override fun handle(ke: KeyEvent) {
             when (ke.code) {
                 KeyCode.SPACE -> {
-                    if (mediaView.mediaPlayer?.media == null) return
+                    val mediaPlayer = mediaView.mediaPlayer
+                    if (mediaPlayer?.media == null) return
 
-                    if (mediaView.mediaPlayer.status == MediaPlayer.Status.PLAYING) {
-                        mediaView.mediaPlayer.pause()
+                    if (mediaPlayer.status == MediaPlayer.Status.PLAYING) {
+                        // pause
+                        mediaPlayer.pause()
                     } else {
-                        mediaView.mediaPlayer.play()
+                        // unpause
+                        mediaPlayer.play()
+                        if (startTime > mediaPlayer.currentTime) {
+                            mediaPlayer.seek(startTime)
+                        }
                     }
                 }
 
