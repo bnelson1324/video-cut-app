@@ -157,7 +157,7 @@ class MainController : Initializable {
                 cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime)
             } else {
                 // disabled copying video to save hard drive space
-//                copyVideo(openDirectory!!, mediaPath)
+                // copyVideo(openDirectory!!, mediaPath)
             }
         }
     }
