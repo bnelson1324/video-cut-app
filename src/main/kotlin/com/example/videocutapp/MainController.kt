@@ -55,7 +55,7 @@ class MainController : Initializable {
         set(value) {
             field = value
             mediaView.mediaPlayer?.startTime = value
-            getVideoData(videoList[mediaPlayerIndex]).startTime = value
+            getVideoData(videoList[mediaPlayerIndex])!!.startTime = value
             startTimeLabel.text = "Start Time: ${formatTime(field.toSeconds())}"
         }
 
@@ -63,7 +63,7 @@ class MainController : Initializable {
         set(value) {
             field = value
             mediaView.mediaPlayer?.stopTime = value
-            getVideoData(videoList[mediaPlayerIndex]).endTime = value
+            getVideoData(videoList[mediaPlayerIndex])!!.endTime = value
             endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
         }
 
@@ -130,8 +130,8 @@ class MainController : Initializable {
 
             // load values from videoData
             initializeVideoData(mediaPath, media)
-            startTime = getVideoData(mediaPath).startTime
-            endTime = getVideoData(mediaPath).endTime
+            startTime = getVideoData(mediaPath)!!.startTime
+            endTime = getVideoData(mediaPath)!!.endTime
         }
 
         mediaPlayer.onEndOfMedia = Runnable {
@@ -145,8 +145,8 @@ class MainController : Initializable {
     @FXML
     fun onProcessVideosBtnClick(ae: ActionEvent) {
         for (mediaPath in videoList) {
-            if (isVideoDataInitialized(mediaPath)) {
-                val videoData = getVideoData(mediaPath)
+            val videoData = getVideoData(mediaPath)
+            if (videoData != null && videoData.modified) {
                 cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime)
             } else {
                 copyVideo(openDirectory!!, mediaPath)
@@ -180,6 +180,7 @@ class MainController : Initializable {
                     } else {
                         Duration.ZERO
                     }
+                    getVideoData(videoList[mediaPlayerIndex])!!.modified = true
                 }
 
                 KeyCode.E -> {
@@ -188,6 +189,7 @@ class MainController : Initializable {
                     } else {
                         mediaPlayer.media.duration
                     }
+                    getVideoData(videoList[mediaPlayerIndex])!!.modified = true
                 }
 
                 KeyCode.LEFT -> {
