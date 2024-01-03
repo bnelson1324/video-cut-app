@@ -94,9 +94,8 @@ class MainController : Initializable {
         // prompt user to choose a directory
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = "Choose folder with videos"
-        openDirectory = directoryChooser.showDialog((ae.source as Node).scene.window)
-        if (openDirectory == null)
-            return
+        val newOpenDirectory = directoryChooser.showDialog((ae.source as Node).scene.window) ?: return
+        openDirectory = newOpenDirectory
 
         // update video list and media player
         openDirectoryLabel.text = "Source Directory: $openDirectory"
