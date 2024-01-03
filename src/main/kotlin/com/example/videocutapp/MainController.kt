@@ -215,7 +215,10 @@ class MainController : Initializable {
                         mediaPlayer.currentTime.toSeconds() + seekAmount,
                         mediaPlayer.media.duration.toSeconds()
                     )
-                    mediaPlayer.seek(mediaPlayer.currentTime.add(Duration(seekAmount * 1000)))
+                    val seekTarget = mediaPlayer.currentTime.add(Duration(seekAmount * 1000))
+                    mediaPlayer.seek(seekTarget)
+                    if (seekTarget.toSeconds() > mediaPlayer.media.duration.toSeconds())
+                        mediaPlayer.stop()
                 }
 
                 KeyCode.A -> {
