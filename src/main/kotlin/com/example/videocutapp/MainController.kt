@@ -21,6 +21,8 @@ import java.io.File
 import java.net.URL
 import java.nio.file.Files
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class MainController : Initializable {
     // open directory
@@ -121,12 +123,11 @@ class MainController : Initializable {
         // update slider and text
         mediaPlayer.currentTimeProperty()
             .addListener { _: ObservableValue<out Duration?>, _: Duration, newValue: Duration ->
-                mediaProgressSlider.value = newValue.toSeconds()
-                mediaLabel.text = "${formatTime(newValue.toSeconds())} / ${formatTime(media.duration.toSeconds())}"
+                updateMediaSliderAndLabel(newValue.toSeconds(), media.duration.toSeconds())
             }
         mediaPlayer.onReady = Runnable {
             mediaProgressSlider.max = mediaPlayer.totalDuration.toSeconds()
-            mediaLabel.text = "${formatTime(0.0)} / ${formatTime(media.duration.toSeconds())}"
+            updateMediaSliderAndLabel(0.0, media.duration.toSeconds())
 
             // load values from videoData
             initializeVideoData(mediaPath, media)
@@ -140,6 +141,12 @@ class MainController : Initializable {
         }
 
         mediaProgressSlider.value = 0.0
+    }
+
+    private fun updateMediaSliderAndLabel(currentTime: Double, totalTime: Double) {
+        val clampedCurrentTime = min(max(currentTime, 0.0), totalTime)
+        mediaProgressSlider.value = clampedCurrentTime
+        mediaLabel.text = "${formatTime(clampedCurrentTime)} / ${formatTime(totalTime)}"
     }
 
     @FXML
@@ -194,11 +201,21 @@ class MainController : Initializable {
                 }
 
                 KeyCode.LEFT -> {
-                    mediaPlayer.seek(mediaPlayer.currentTime.subtract(Duration(if (!ke.isControlDown) 5000.0 else 15000.0)))
+                    val seekAmount = if (!ke.isControlDown) 5.0 else 15.0
+                    updateMediaSliderAndLabel(
+                        mediaPlayer.currentTime.toSeconds() - seekAmount,
+                        mediaPlayer.media.duration.toSeconds()
+                    )
+                    mediaPlayer.seek(mediaPlayer.currentTime.subtract(Duration(seekAmount * 1000)))
                 }
 
                 KeyCode.RIGHT -> {
-                    mediaPlayer.seek(mediaPlayer.currentTime.add(Duration(if (!ke.isControlDown) 5000.0 else 15000.0)))
+                    val seekAmount = if (!ke.isControlDown) 5.0 else 15.0
+                    updateMediaSliderAndLabel(
+                        mediaPlayer.currentTime.toSeconds() + seekAmount,
+                        mediaPlayer.media.duration.toSeconds()
+                    )
+                    mediaPlayer.seek(mediaPlayer.currentTime.add(Duration(seekAmount * 1000)))
                 }
 
                 KeyCode.A -> {
