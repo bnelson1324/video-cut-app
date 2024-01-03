@@ -67,14 +67,15 @@
                   <Label fx:id="endTimeLabel" text="End Time:" />
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onProcessVideosBtnClick" text="Process All Videos" />
-               </children>
+            <HBox spacing="32.0">
                <VBox.margin>
                   <Insets bottom="16.0" top="16.0" />
                </VBox.margin>
-            </VBox>
+               <children>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onProcessVideosBtnClick" text="Process All Videos" />
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onOpenOutputDirectoryBtnClick" text="Open Output Directory" />
+               </children>
+            </HBox>
          </children>
       </VBox>
     </children>

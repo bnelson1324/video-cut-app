@@ -18,6 +18,7 @@ import javafx.scene.media.MediaPlayer
 import javafx.scene.media.MediaView
 import javafx.stage.DirectoryChooser
 import javafx.util.Duration
+import java.awt.Desktop
 import java.io.File
 import java.net.URL
 import java.nio.file.Files
@@ -165,7 +166,7 @@ class MainController : Initializable {
     }
 
     @FXML
-    fun onProcessVideosBtnClick(ae: ActionEvent) {
+    fun onProcessVideosBtnClick() {
         for (mediaPath in videoList) {
             val videoData = getVideoData(mediaPath)
             if (videoData != null && videoData.modified) {
@@ -174,6 +175,15 @@ class MainController : Initializable {
                 // disabled copying video to save hard drive space
                 // copyVideo(openDirectory!!, mediaPath)
             }
+        }
+    }
+
+    @FXML
+    fun onOpenOutputDirectoryBtnClick() {
+        if (openDirectory != null) {
+            val outputDirectory = getOutputDirectory(openDirectory!!)
+            outputDirectory.mkdirs()
+            Desktop.getDesktop().open(outputDirectory)
         }
     }
 

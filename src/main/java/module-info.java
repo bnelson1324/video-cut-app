@@ -3,6 +3,7 @@ module com.example.videocutapp {
     requires javafx.fxml;
     requires javafx.media;
     requires kotlin.stdlib;
+    requires java.desktop;
 
 
     opens com.example.videocutapp to javafx.fxml;

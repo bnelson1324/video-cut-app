@@ -6,7 +6,7 @@ import java.io.File
 private const val crf: Int = 18
 
 private const val relativeOutputDirectory = "vca-output"
-private fun getOutputDirectory(openFile: File) = File(openFile.absoluteFile, relativeOutputDirectory)
+fun getOutputDirectory(openDirectory: File) = File(openDirectory.absoluteFile, relativeOutputDirectory)
 private fun getOutputPath(openDirectory: File, mediaPath: File) =
     File(getOutputDirectory(openDirectory), mediaPath.name)
 
