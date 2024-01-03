@@ -3,6 +3,8 @@ package com.example.videocutapp
 import javafx.util.Duration
 import java.io.File
 
+private const val crf: Int = 18
+
 private const val relativeOutputDirectory = "vca-output"
 private fun getOutputDirectory(openFile: File) = File(openFile.absoluteFile, relativeOutputDirectory)
 private fun getOutputPath(openDirectory: File, mediaPath: File) =
@@ -13,7 +15,7 @@ fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTi
     val builder =
         ProcessBuilder(
             *getShellCommand(),
-            "ffmpeg -i ${videoPath.absolutePath} -ss ${startTime.toFFmpegTime()} -to ${endTime.toFFmpegTime()} $outputPath"
+            "ffmpeg -i ${videoPath.absolutePath} -ss ${startTime.toFFmpegTime()} -to ${endTime.toFFmpegTime()} -crf $crf $outputPath"
         )
             .directory(workingDirectory.absoluteFile)
 
