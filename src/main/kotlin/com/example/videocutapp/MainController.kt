@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.BorderPane
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.media.MediaView
@@ -79,6 +80,9 @@ class MainController : Initializable {
     @FXML
     private lateinit var root: AnchorPane
 
+    @FXML
+    private lateinit var mediaViewPane: BorderPane
+
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // set up slider
@@ -141,6 +145,10 @@ class MainController : Initializable {
         }
 
         mediaProgressSlider.value = 0.0
+
+        // handle sizing mediaView
+        mediaView.fitWidthProperty().bind(mediaViewPane.widthProperty())
+        mediaView.fitHeightProperty().bind(mediaViewPane.heightProperty())
     }
 
     private fun updateMediaSliderAndLabel(currentTime: Double, totalTime: Double) {

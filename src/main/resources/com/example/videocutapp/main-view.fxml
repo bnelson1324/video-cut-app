@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videocutapp.MainController">
     <children>
-      <BorderPane prefHeight="473.0" prefWidth="636.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="16.0">
+      <BorderPane fx:id="borderPane" prefHeight="473.0" prefWidth="636.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="16.0">
          <bottom>
             <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="4.0" style="-fx-background-color: #EEEEEE;" BorderPane.alignment="CENTER">
                <children>
@@ -23,7 +23,13 @@
             </VBox>
          </bottom>
          <center>
-                <MediaView fx:id="mediaView" fitHeight="270.0" fitWidth="480.0" BorderPane.alignment="CENTER" />
+            <BorderPane fx:id="mediaViewPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <center>
+                      <MediaView fx:id="mediaView" fitHeight="270.0" fitWidth="480.0" BorderPane.alignment="CENTER" />
+               </center>
+               <BorderPane.margin>
+                  <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+               </BorderPane.margin></BorderPane>
          </center>
       </BorderPane>
       <VBox alignment="TOP_RIGHT" spacing="8.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
