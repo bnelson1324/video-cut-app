@@ -53,6 +53,9 @@ class MainController : Initializable {
     @FXML
     private lateinit var mediaLabel: Label
 
+    @FXML
+    private lateinit var volumeSlider: Slider
+
     // start/end time
     private var startTime: Duration = Duration.ZERO
         set(value) {
@@ -92,7 +95,8 @@ class MainController : Initializable {
         }
         mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_CLICKED, sliderMouseEvent)
         mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED, sliderMouseEvent)
-        mediaProgressSlider.addEventHandler(MouseEvent.MOUSE_RELEASED) { root.requestFocus() }
+        mediaProgressSlider.addUnfocusableEvent()
+        volumeSlider.addUnfocusableEvent()
     }
 
     @FXML
@@ -149,6 +153,9 @@ class MainController : Initializable {
         // handle sizing mediaView
         mediaView.fitWidthProperty().bind(mediaViewPane.widthProperty())
         mediaView.fitHeightProperty().bind(mediaViewPane.heightProperty())
+
+        // handle volume
+        mediaPlayer.volumeProperty().bind(volumeSlider.valueProperty())
     }
 
     private fun updateMediaSliderAndLabel(currentTime: Double, totalTime: Double) {
@@ -242,5 +249,9 @@ class MainController : Initializable {
                 else -> return
             }
         }
+    }
+
+    private fun Slider.addUnfocusableEvent() {
+        this.addEventHandler(MouseEvent.MOUSE_RELEASED) { root.requestFocus() }
     }
 }

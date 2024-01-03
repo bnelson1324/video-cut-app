@@ -12,7 +12,25 @@
             <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="4.0" style="-fx-background-color: #EEEEEE;" BorderPane.alignment="CENTER">
                <children>
                   <Slider fx:id="mediaProgressSlider" focusTraversable="false" max="1.0" />
-                  <Label fx:id="mediaLabel" focusTraversable="false" text="0:00:00 / 0:00:00" />
+                  <BorderPane>
+                     <center>
+                        <Label fx:id="mediaLabel" focusTraversable="false" text="0:00:00 / 0:00:00" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets right="-32.0" />
+                           </BorderPane.margin></Label>
+                     </center>
+                     <right>
+                        <HBox spacing="8.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label focusTraversable="false" text="Volume" />
+                              <Slider fx:id="volumeSlider" focusTraversable="false" max="1.0" value="0.5" />
+                           </children>
+                           <padding>
+                              <Insets right="32.0" />
+                           </padding>
+                        </HBox>
+                     </right>
+                  </BorderPane>
                </children>
                <padding>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
