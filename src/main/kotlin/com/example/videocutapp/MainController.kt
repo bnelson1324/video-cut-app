@@ -145,10 +145,12 @@ class MainController : Initializable {
     @FXML
     fun onProcessVideosBtnClick(ae: ActionEvent) {
         for (mediaPath in videoList) {
-            if (!isVideoDataInitialized(mediaPath))
-                return
-            val videoData = getVideoData(mediaPath)
-            cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime)
+            if (isVideoDataInitialized(mediaPath)) {
+                val videoData = getVideoData(mediaPath)
+                cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime)
+            } else {
+                copyVideo(openDirectory!!, mediaPath)
+            }
         }
     }
 

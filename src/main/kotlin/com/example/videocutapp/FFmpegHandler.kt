@@ -4,10 +4,12 @@ import javafx.util.Duration
 import java.io.File
 
 private const val relativeOutputDirectory = "vca-output"
+private fun getOutputDirectory(openFile: File) = File(openFile.absoluteFile, relativeOutputDirectory)
+private fun getOutputPath(openDirectory: File, mediaPath: File) =
+    File(getOutputDirectory(openDirectory), mediaPath.name)
 
 fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTime: Duration) {
-    val outputDirectory = File(workingDirectory.absoluteFile, relativeOutputDirectory)
-    val outputPath = File(outputDirectory, videoPath.name)
+    val outputPath = getOutputPath(workingDirectory, videoPath)
     val builder =
         ProcessBuilder(
             *getShellCommand(),
@@ -15,8 +17,12 @@ fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTi
         )
             .directory(workingDirectory.absoluteFile)
 
-    outputDirectory.mkdirs()
+    getOutputDirectory(workingDirectory).mkdirs()
     builder.start()
+}
+
+fun copyVideo(openDirectory: File, videoPath: File) {
+    videoPath.copyTo(getOutputPath(openDirectory, videoPath))
 }
 
 private fun getShellCommand(): Array<String> {
