@@ -15,7 +15,7 @@ fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTi
     val builder =
         ProcessBuilder(
             *getShellCommand(),
-            "ffmpeg -i ${videoPath.absolutePath} -ss ${startTime.toFFmpegTime()} -to ${endTime.toFFmpegTime()} -crf $crf -y $outputPath"
+            "ffmpeg -i \"${videoPath.absolutePath}\" -ss ${startTime.toFFmpegTime()} -to ${endTime.toFFmpegTime()} -crf $crf -y \"$outputPath\""
         )
             .directory(workingDirectory.absoluteFile)
 
