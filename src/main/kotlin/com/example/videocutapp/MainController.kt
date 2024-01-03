@@ -55,6 +55,7 @@ class MainController : Initializable {
         set(value) {
             field = value
             mediaView.mediaPlayer?.startTime = value
+            getVideoData(videoList[mediaPlayerIndex]).startTime = value
             startTimeLabel.text = "Start Time: ${formatTime(field.toSeconds())}"
         }
 
@@ -62,6 +63,7 @@ class MainController : Initializable {
         set(value) {
             field = value
             mediaView.mediaPlayer?.stopTime = value
+            getVideoData(videoList[mediaPlayerIndex]).endTime = value
             endTimeLabel.text = "End Time: ${formatTime(endTime.toSeconds())}"
         }
 
@@ -112,7 +114,8 @@ class MainController : Initializable {
         mediaView.mediaPlayer?.pause()
 
         // update media player
-        val media = Media(videoList[mediaPlayerIndex].toURI().toString())
+        val mediaPath = videoList[mediaPlayerIndex]
+        val media = Media(mediaPath.toURI().toString())
         val mediaPlayer = MediaPlayer(media)
         mediaView.mediaPlayer = mediaPlayer
 
@@ -126,9 +129,10 @@ class MainController : Initializable {
             mediaProgressSlider.max = mediaPlayer.totalDuration.toSeconds()
             mediaLabel.text = "${formatTime(0.0)} / ${formatTime(media.duration.toSeconds())}"
 
-            // update startTime and endTime
-            startTime = Duration.ZERO
-            endTime = media.duration
+            // load values from videoData
+            initializeVideoData(mediaPath, media)
+            startTime = getVideoData(mediaPath).startTime
+            endTime = getVideoData(mediaPath).endTime
         }
 
         mediaPlayer.onEndOfMedia = Runnable {
