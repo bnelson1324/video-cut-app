@@ -15,4 +15,8 @@ fun getVideoData(mediaPath: File): VideoData {
     return videoDataMap[mediaPath]!!
 }
 
+fun isVideoDataInitialized(mediaPath: File): Boolean {
+    return videoDataMap.contains(mediaPath)
+}
+
 data class VideoData(var startTime: Duration, var endTime: Duration)

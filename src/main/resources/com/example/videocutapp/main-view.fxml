@@ -43,6 +43,14 @@
                   <Label fx:id="endTimeLabel" text="End Time:" />
                </children>
             </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onProcessVideosBtnClick" text="Process All Videos" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="16.0" top="16.0" />
+               </VBox.margin>
+            </VBox>
          </children>
       </VBox>
     </children>

@@ -142,6 +142,16 @@ class MainController : Initializable {
         mediaProgressSlider.value = 0.0
     }
 
+    @FXML
+    fun onProcessVideosBtnClick(ae: ActionEvent) {
+        for (mediaPath in videoList) {
+            if (!isVideoDataInitialized(mediaPath))
+                return
+            val videoData = getVideoData(mediaPath)
+            cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime)
+        }
+    }
+
     val keyEventHandler = object : EventHandler<KeyEvent> {
         override fun handle(ke: KeyEvent) {
             val mediaPlayer: MediaPlayer? = mediaView.mediaPlayer
