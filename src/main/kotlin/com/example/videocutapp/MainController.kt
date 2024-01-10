@@ -87,6 +87,9 @@ class MainController : Initializable {
     @FXML
     private lateinit var mediaViewPane: BorderPane
 
+    @FXML
+    private lateinit var progressLabel: Label
+
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // set up slider
@@ -170,7 +173,7 @@ class MainController : Initializable {
         for (mediaPath in videoList) {
             val videoData = getVideoData(mediaPath)
             if (videoData != null && videoData.modified) {
-                cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime)
+                cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime, progressLabel)
             } else {
                 // disabled copying video to save hard drive space
                 // copyVideo(openDirectory!!, mediaPath)

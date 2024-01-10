@@ -50,7 +50,7 @@
                </BorderPane.margin></BorderPane>
          </center>
       </BorderPane>
-      <VBox alignment="TOP_RIGHT" spacing="8.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+      <VBox spacing="8.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
@@ -76,6 +76,7 @@
                   <Button focusTraversable="false" mnemonicParsing="false" onAction="#onOpenOutputDirectoryBtnClick" text="Open Output Directory" />
                </children>
             </HBox>
+            <Label fx:id="progressLabel" focusTraversable="false" />
          </children>
       </VBox>
     </children>

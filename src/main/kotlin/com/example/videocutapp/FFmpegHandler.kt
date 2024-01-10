@@ -3,6 +3,8 @@ package com.example.videocutapp
 import com.github.kokorin.jaffree.ffmpeg.FFmpeg
 import com.github.kokorin.jaffree.ffmpeg.UrlInput
 import com.github.kokorin.jaffree.ffmpeg.UrlOutput
+import javafx.application.Platform
+import javafx.scene.control.Label
 import javafx.util.Duration
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -14,11 +16,13 @@ fun getOutputDirectory(openDirectory: File) = File(openDirectory.absoluteFile, r
 private fun getOutputPath(openDirectory: File, mediaPath: File) =
     File(getOutputDirectory(openDirectory), mediaPath.name)
 
-fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTime: Duration) {
+fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTime: Duration, progressLabel: Label) {
     val outputPath = getOutputPath(workingDirectory, videoPath)
-
     getOutputDirectory(workingDirectory).mkdirs()
-    FFmpeg.atPath()
+
+    progressLabel.text = "Processing..."
+    Thread {
+        FFmpeg.atPath()
             .addInput(UrlInput
                 .fromUrl(videoPath.absolutePath)
                 .setPosition(startTime.toMillis(), TimeUnit.MILLISECONDS)
@@ -27,6 +31,8 @@ fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTi
             .setOverwriteOutput(true)
             .addOutput(UrlOutput.toUrl(outputPath.absolutePath))
             .execute()
+        Platform.runLater { progressLabel.text = "Finished processing" }
+    }.start()
 }
 
 fun copyVideo(openDirectory: File, videoPath: File) {
