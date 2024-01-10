@@ -1,7 +1,11 @@
 package com.example.videocutapp
 
+import com.github.kokorin.jaffree.ffmpeg.FFmpeg
+import com.github.kokorin.jaffree.ffmpeg.UrlInput
+import com.github.kokorin.jaffree.ffmpeg.UrlOutput
 import javafx.util.Duration
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 private const val crf: Int = 18
 
@@ -12,15 +16,17 @@ private fun getOutputPath(openDirectory: File, mediaPath: File) =
 
 fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTime: Duration) {
     val outputPath = getOutputPath(workingDirectory, videoPath)
-    val builder =
-        ProcessBuilder(
-            *getShellCommand(),
-            "ffmpeg -i \"${videoPath.absolutePath}\" -ss ${startTime.toFFmpegTime()} -to ${endTime.toFFmpegTime()} -crf $crf -y \"$outputPath\""
-        )
-            .directory(workingDirectory.absoluteFile)
 
     getOutputDirectory(workingDirectory).mkdirs()
-    builder.start()
+    FFmpeg.atPath()
+            .addInput(UrlInput
+                .fromUrl(videoPath.absolutePath)
+                .setPosition(startTime.toMillis(), TimeUnit.MILLISECONDS)
+                .setDuration(endTime.subtract(startTime).toMillis(), TimeUnit.MILLISECONDS)
+            )
+            .setOverwriteOutput(true)
+            .addOutput(UrlOutput.toUrl(outputPath.absolutePath))
+            .execute()
 }
 
 fun copyVideo(openDirectory: File, videoPath: File) {
