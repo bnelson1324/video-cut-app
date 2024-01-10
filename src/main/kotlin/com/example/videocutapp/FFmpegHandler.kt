@@ -9,14 +9,15 @@ import javafx.util.Duration
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-private const val crf: Int = 18
+private const val crfHighQuality: Int = 18
+private const val crfLowQuality: Int = 40
 
 private const val relativeOutputDirectory = "vca-output"
 fun getOutputDirectory(openDirectory: File) = File(openDirectory.absoluteFile, relativeOutputDirectory)
 private fun getOutputPath(openDirectory: File, mediaPath: File) =
     File(getOutputDirectory(openDirectory), mediaPath.name)
 
-fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTime: Duration, progressLabel: Label) {
+fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTime: Duration, highQuality: Boolean, progressLabel: Label) {
     val outputPath = getOutputPath(workingDirectory, videoPath)
     getOutputDirectory(workingDirectory).mkdirs()
 
@@ -29,6 +30,7 @@ fun cutVideo(workingDirectory: File, videoPath: File, startTime: Duration, endTi
                 .setDuration(endTime.subtract(startTime).toMillis(), TimeUnit.MILLISECONDS)
             )
             .setOverwriteOutput(true)
+            .addArguments("-crf", (if (highQuality) crfHighQuality else crfLowQuality).toString())
             .addOutput(UrlOutput.toUrl(outputPath.absolutePath))
             .execute()
         Platform.runLater { progressLabel.text = "Finished processing" }

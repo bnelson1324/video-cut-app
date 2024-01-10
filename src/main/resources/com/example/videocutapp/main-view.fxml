@@ -67,6 +67,7 @@
                   <Label fx:id="endTimeLabel" text="End Time:" />
                </children>
             </VBox>
+            <CheckBox fx:id="highQualityCheckbox" focusTraversable="false" mnemonicParsing="false" selected="true" text="High Quality Output" />
             <HBox spacing="32.0">
                <VBox.margin>
                   <Insets bottom="16.0" top="16.0" />

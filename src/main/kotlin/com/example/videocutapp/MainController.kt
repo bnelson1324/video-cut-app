@@ -6,6 +6,7 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.Node
+import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
 import javafx.scene.control.Slider
 import javafx.scene.input.KeyCode
@@ -86,6 +87,9 @@ class MainController : Initializable {
 
     @FXML
     private lateinit var mediaViewPane: BorderPane
+
+    @FXML
+    private lateinit var highQualityCheckbox: CheckBox
 
     @FXML
     private lateinit var progressLabel: Label
@@ -173,7 +177,7 @@ class MainController : Initializable {
         for (mediaPath in videoList) {
             val videoData = getVideoData(mediaPath)
             if (videoData != null && videoData.modified) {
-                cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime, progressLabel)
+                cutVideo(openDirectory!!, mediaPath, videoData.startTime, videoData.endTime, highQualityCheckbox.isSelected, progressLabel)
             } else {
                 // disabled copying video to save hard drive space
                 // copyVideo(openDirectory!!, mediaPath)
